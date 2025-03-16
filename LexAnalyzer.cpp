@@ -22,5 +22,4 @@ LexAnalyzer::LexAnalyzer(istream& infile) {
 // an error message have been written to the output file.
 // A success or fail message has printed to the console.
 void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
-
 }
