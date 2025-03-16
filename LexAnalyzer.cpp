@@ -6,7 +6,11 @@
 // post: tokenmap has been populated - key: lexeme, value: token
 
 LexAnalyzer::LexAnalyzer(istream& infile) {
-
+    string token;
+    string lexeme;
+    while (infile >> token >> lexeme) {
+        tokenmap[lexeme] = token;
+    }
 }
 
 // pre: 1st parameter refers to an open text file that contains source
