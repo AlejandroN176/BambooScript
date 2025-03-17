@@ -1,0 +1,22 @@
+# ninja log v6
+106	982	7638703537997076	CMakeFiles/compilerpart1.dir/main.cpp.obj	33d47ef364387a9f
+155	1070	7638703538476415	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+1070	1599	7638703547623945	compilerpart1.exe	f9740b374b550763
+69	840	7638704756512995	CMakeFiles/compilerpart1.dir/main.cpp.obj	33d47ef364387a9f
+76	970	7638704756591438	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+971	1125	7638704765521502	compilerpart1.exe	f9740b374b550763
+24	680	7638704901847595	CMakeFiles/compilerpart1.dir/main.cpp.obj	33d47ef364387a9f
+681	827	7638704908419784	compilerpart1.exe	f9740b374b550763
+5	710	7638705361372166	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+711	846	7638705368419160	compilerpart1.exe	f9740b374b550763
+46	790	7638715668882088	CMakeFiles/compilerpart1.dir/main.cpp.obj	33d47ef364387a9f
+58	893	7638715669004307	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+893	1101	7638715677345412	compilerpart1.exe	f9740b374b550763
+31	1126	7638718197625326	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+1126	1330	7638718208581256	compilerpart1.exe	f9740b374b550763
+318	1672	7639297253443105	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+1673	2329	7639297266992178	compilerpart1.exe	f9740b374b550763
+5	1487	7639298947529677	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+1488	1753	7639298962384039	compilerpart1.exe	f9740b374b550763
+46	1281	7639300903815406	CMakeFiles/compilerpart1.dir/LexAnalyzer.cpp.obj	4218d0a293deb835
+1283	1535	7639300916177092	compilerpart1.exe	f9740b374b550763
