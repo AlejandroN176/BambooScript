@@ -30,12 +30,47 @@ LexAnalyzer::LexAnalyzer(istream& infile) {
 // A success or fail message has printed to the console.
 void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
         string word;
-
+        string builder;
+        string symbol;
+        bool assigning = false;
         while (infile >> word) {
                 if (tokenmap.find(word) != tokenmap.end()){
                         outfile << tokenmap[word] << " : " << word << endl;
-                } else {
-                        outfile << "ERROR: Unrecognized lexeme '" << word << "'" << endl;
+                }
+                else {
+                        for(int i = 0; i < word.length(); i++) {
+                                char currentChar = word.at(i);
+                                if (isalpha(currentChar) || currentChar == '_'  || (assigning == false && isdigit(currentChar))){
+                                        builder += word.at(i);
+                                        //delete this later
+                                        cout << word.at(i) << endl;
+                                }
+                                else if (currentChar == '=' ) {
+                                        //First sees = then checks if its actually ==
+                                        if (i+1 < word.length() && word.at(i + 1) == '=') {
+                                                symbol = "==";
+                                        }
+                                        else {
+                                                symbol = "=";
+                                                assigning = true;
+                                        }
+                                        cout << symbol << endl;
+                                        outfile << tokenmap[symbol] << " : " << symbol << endl;
+
+                                }
+                                else if (currentChar == '"') {
+                                        // we need to be able to get the text within "" without creating another for loop
+                                        // we just need whatever is inside doesnt matter what so no need to check
+                                        }
+                                else {
+                                        //this runs when a symbol get found and adds the word builder then the symbol and reiterates to the next word
+                                        symbol = currentChar;
+                                        if (!builder.empty())
+                                                outfile << tokenmap[builder] << " : " << builder << endl;
+                                        outfile << tokenmap[symbol] << " : " << symbol << endl;
+                                        builder = "";
+                                }
+                        }
                 }
         }
 }
