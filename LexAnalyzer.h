@@ -40,6 +40,7 @@ private:
     void assignment(string,int,string,ostream& outfile);
     void appendOutfile(string,string,string,int,ostream& outfile);
     void quotefunc(string,string,string, int, ostream& outfile);
+    void checkSystem(string builder, ostream& outfile);
 };
 
 #endif //LEXANALYZER_H

@@ -31,7 +31,9 @@ void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
             outfile << tokenmap[word] << " : " << word << endl;
         else {
             for(int i = 0; i < word.length(); i++) {
-                builder += word.at(i);
+                if (isalpha(word.at(i)) || word.at(i) == '_') {
+                    builder += word.at(i);
+                }
                 else if (isdigit(word.at(i))){
                     builder += word.at(i);
                     //put throw exception in here
@@ -40,12 +42,10 @@ void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
                     // a number cannot have letter directly after it
                 }else if (word.at(i) == '"'){
                     quotefunc(builder, symbol,word,i,outfile);
+                    builder = "";
                 }
-                else{
-                    if (word.at(i) == '(' || word.at(i) == ')' || word.at(i) == ';' || word.at(i) == '='){
-                        appendOutfile(word, builder,symbol, i, outfile);
+                else{appendOutfile(word, builder,symbol, i, outfile);
                         builder = "";
-                    }
                 }
             }
         }
@@ -53,12 +53,9 @@ void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
 }
 
 
-//declares variables at the very beginning
+//declares variables at the very beginning we can not declare variables anywhere
 void varDeclaration(string word) {
-        string concat= "";
-        if (islower(isalpha(word.at(0)))){
-               concat += word.at(0);
-        }
+
 }
 
 
@@ -80,18 +77,28 @@ void LexAnalyzer::assignment(string word, int i, string symbol, ostream& outfile
 //function for reading inside of double quotes
 void LexAnalyzer::quotefunc(string builder,string symbol,string word, int i, ostream& outfile ) {
     if (builder != ""){
-        outfile << tokenmap[builder] << " : " << builder << endl;
-        builder = "";
+        outfile << "t_text" << " : " << builder << endl;
     }
+    //this is to add a source token to the outfile for a " so t_" : " not sure if its needed.
 
-    symbol = word.at(i);
-    outfile << tokenmap[symbol] << " : " << symbol << endl;
+    // symbol = word.at(i);
+    // outfile << "t_\"" << " : " << symbol << endl;
 }
-
+//this should only run at the very beginning of the code before main statment
+void LexAnalyzer::checkSystem(string builder, ostream& outfile){
+    if (isdigit(builder.at(0))){
+        outfile << "t_number" << " : " << builder << endl;
+    }else if (isalpha(builder.at(0))) {
+        outfile << "t_id" << " : " << builder << endl;
+    }
+}
 //appends to sourcelexemes
 void LexAnalyzer::appendOutfile(const string word,const string builder, string symbol, int i, ostream& outfile){
+    //we need && statement if its unable to find in the token map
     if (builder != ""){
         outfile << tokenmap[builder] << " : " << builder << endl;
+    }else {
+        //we need error exception to be implement and placed in output
     }
     symbol = word.at(i);
     outfile << tokenmap[symbol] << " : " << symbol << endl;

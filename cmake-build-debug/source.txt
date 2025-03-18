@@ -1,6 +1,6 @@
+integer x= 5;
+string y= "hello";
 main
-  integer x= 5;
-  string y= "hello";
   if( 3<5){
   output("world");
   }
