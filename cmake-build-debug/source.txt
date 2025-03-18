@@ -1,3 +1,7 @@
 main
   integer x= 5;
-  output(“hello world”);
+  string y= "hello";
+  if( 3<5){
+  output("world");
+  }
+  output("hello world");

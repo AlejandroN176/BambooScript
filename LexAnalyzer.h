@@ -35,5 +35,11 @@ public:
     // If there is an error, the incomplete token/lexeme pairs, as well as
     // an error message have been written to the output file.
     // A success or fail message has printed to the console.
+private:
+    void varDeclaration(string);
+    void assignment(string,int,string,ostream& outfile);
+    void appendOutfile(string,string,string,int,ostream& outfile);
+    void quotefunc(string,string,string, int, ostream& outfile);
 };
+
 #endif //LEXANALYZER_H

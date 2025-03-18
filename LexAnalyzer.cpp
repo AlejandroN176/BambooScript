@@ -1,4 +1,5 @@
 #include "LexAnalyzer.h"
+using namespace std;
 // pre: parameter refers to open data file consisting of token and
 // lexeme pairs i.e.  s_and and t_begin begin t_int 27
 // Each pair appears on its own input line.
@@ -14,63 +15,84 @@ LexAnalyzer::LexAnalyzer(istream& infile) {
 
         while (infile >> token >> lexeme) {
                 tokenmap[lexeme] = token;
-                cout << "Added: " << lexeme << " -> " << token << endl;
+//                cout << "Added: " << lexeme << " -> " << token << endl;
         }
 
 
 }
 
-// pre: 1st parameter refers to an open text file that contains source
-// code in the language, 2nd parameter refers to an open empty output
-// file
-// post: If no error, the token and lexeme pairs for the given input
-// file have been written to the output file (token : lexeme).
-// If there is an error, the incomplete token/lexeme pairs, as well as
-// an error message have been written to the output file.
-// A success or fail message has printed to the console.
 void LexAnalyzer::scanFile(istream& infile, ostream& outfile) {
-        string word;
-        string builder;
-        string symbol;
-        bool assigning = false;
-        while (infile >> word) {
-                if (tokenmap.find(word) != tokenmap.end()){
-                        outfile << tokenmap[word] << " : " << word << endl;
+    string word;
+    string builder;
+    string symbol;
+    while (infile >> word) {
+        cout << word;
+        if (tokenmap.find(word) != tokenmap.end())
+            outfile << tokenmap[word] << " : " << word << endl;
+        else {
+            for(int i = 0; i < word.length(); i++) {
+                builder += word.at(i);
+                else if (isdigit(word.at(i))){
+                    builder += word.at(i);
+                    //put throw exception in here
+                    //if word.at(i + 1) is == to a-z
+                    //throws an error
+                    // a number cannot have letter directly after it
+                }else if (word.at(i) == '"'){
+                    quotefunc(builder, symbol,word,i,outfile);
                 }
-                else {
-                        for(int i = 0; i < word.length(); i++) {
-                                char currentChar = word.at(i);
-                                if (isalpha(currentChar) || currentChar == '_'  || (assigning == false && isdigit(currentChar))){
-                                        builder += word.at(i);
-                                        //delete this later
-                                        cout << word.at(i) << endl;
-                                }
-                                else if (currentChar == '=' ) {
-                                        //First sees = then checks if its actually ==
-                                        if (i+1 < word.length() && word.at(i + 1) == '=') {
-                                                symbol = "==";
-                                        }
-                                        else {
-                                                symbol = "=";
-                                                assigning = true;
-                                        }
-                                        cout << symbol << endl;
-                                        outfile << tokenmap[symbol] << " : " << symbol << endl;
-
-                                }
-                                else if (currentChar == '"') {
-                                        // we need to be able to get the text within "" without creating another for loop
-                                        // we just need whatever is inside doesnt matter what so no need to check
-                                        }
-                                else {
-                                        //this runs when a symbol get found and adds the word builder then the symbol and reiterates to the next word
-                                        symbol = currentChar;
-                                        if (!builder.empty())
-                                                outfile << tokenmap[builder] << " : " << builder << endl;
-                                        outfile << tokenmap[symbol] << " : " << symbol << endl;
-                                        builder = "";
-                                }
-                        }
+                else{
+                    if (word.at(i) == '(' || word.at(i) == ')' || word.at(i) == ';' || word.at(i) == '='){
+                        appendOutfile(word, builder,symbol, i, outfile);
+                        builder = "";
+                    }
                 }
+            }
         }
+    }
+}
+
+
+//declares variables at the very beginning
+void varDeclaration(string word) {
+        string concat= "";
+        if (islower(isalpha(word.at(0)))){
+               concat += word.at(0);
+        }
+}
+
+
+//todo better function name
+//for the assignment operator = code
+void LexAnalyzer::assignment(string word, int i, string symbol, ostream& outfile) {
+    //First sees = then checks if its actually ==
+    if (i+1 < word.length() && word.at(i + 1) == '=') {
+        symbol = "==";
+    }
+    else {
+        symbol = "=";
+    }
+    cout << symbol << endl;
+    outfile << tokenmap[symbol] << " : " << symbol << endl;
+}
+
+//todo better function name
+//function for reading inside of double quotes
+void LexAnalyzer::quotefunc(string builder,string symbol,string word, int i, ostream& outfile ) {
+    if (builder != ""){
+        outfile << tokenmap[builder] << " : " << builder << endl;
+        builder = "";
+    }
+
+    symbol = word.at(i);
+    outfile << tokenmap[symbol] << " : " << symbol << endl;
+}
+
+//appends to sourcelexemes
+void LexAnalyzer::appendOutfile(const string word,const string builder, string symbol, int i, ostream& outfile){
+    if (builder != ""){
+        outfile << tokenmap[builder] << " : " << builder << endl;
+    }
+    symbol = word.at(i);
+    outfile << tokenmap[symbol] << " : " << symbol << endl;
 }

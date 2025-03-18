@@ -17,9 +17,12 @@ s_colon :
 s_lparen (
 s_rparen )
 s_semi ;
-t_begin {
-t_end }
-s_compare ==
+s_lbrace {
+s_rbrace }
+s_eq ==
 s_nequal !=
-s_greater >
-s_less <
+s_gt >
+s_lt <
+s_minus -
+s_plus +
+s_div /
